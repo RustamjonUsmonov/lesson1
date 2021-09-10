@@ -16,5 +16,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/index', [\App\Http\Controllers\SomeController::class, 'index'])->name('index');
-Route::get('/user/show/{id}', [\App\Http\Controllers\SomeController::class, 'show'])->name('show');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/index', [\App\Http\Controllers\SomeController::class, 'index'])->name('index');
+    Route::get('/show/{id}', [\App\Http\Controllers\SomeController::class, 'show'])->name('show');
+});
+
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
